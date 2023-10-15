@@ -151,7 +151,7 @@
                                 <div class="hero__thumb-2 scene">
                                     <div class="gambaran-sekolah">
                                         <img class="gambarnya"
-                                            src="https://okinafitriani.files.wordpress.com/2018/10/image.png?w=640">
+                                            src=""{{ asset('storage/halaman/' . $pengaturan->foto_sekolah) }}"">
                                     </div>
                                 </div>
                             </div>
@@ -170,7 +170,7 @@
                         <div class="about__thumb-wrapper">
                             <div class="about__thumb ">
                                 <div style="width:440px; height:440px; background-color:grey;  ">
-                                    <img src="https://blog.amartha.com/wp-content/uploads/2022/03/ilustrasi-orang-tajir.jpg"
+                                    <img src="{{ asset('storage/halaman/' . $pengaturan->foto_kepsek) }}"
                                         style="height:100%; width:100%" alt="" />
                                 </div>
 
@@ -181,13 +181,13 @@
                         <div class="about__content pl-70 pr-60 pt-25">
                             <div class="section__title-wrapper mb-25">
                                 <h2 class="section__title">
-                                    Syahrul Ulum
+                                    {{ $pengaturan->nama_kepsek }}
                                     <hr style="margin: 0; width: 150px" />
                                     <p style="font-size: 20px; font-weight: bold">
                                         Kepala Sekolah
                                     </p>
                                 </h2>
-                                <p>Haloooooooooooooooo</p>
+                                <p>{{ $pengaturan->pesan_kepsek }}</p>
                             </div>
                         </div>
                     </div>
