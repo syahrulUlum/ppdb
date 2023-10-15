@@ -54,7 +54,7 @@
                                 <br>
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#detailModal"
-                                    data-berkas="{{ asset('storage/akta/' . $berkas->akta_kelahiran) }}"
+                                    data-berkas="{{ asset('uploads/akta/' . $berkas->akta_kelahiran) }}"
                                     data-judul="Akta Kelahiran">
                                     Data sebelumnya
                                 </button>
@@ -71,7 +71,7 @@
                                 <br>
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#detailModal"
-                                    data-berkas="{{ asset('storage/kartu_keluarga/' . $berkas->kartu_keluarga) }}"
+                                    data-berkas="{{ asset('uploads/kartu_keluarga/' . $berkas->kartu_keluarga) }}"
                                     data-judul="Kartu Keluarga">
                                     Data sebelumnya
                                 </button>
@@ -88,7 +88,7 @@
                                 <br>
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#detailModal"
-                                    data-berkas="{{ asset('storage/ijazah/' . $berkas->ijazah_tk) }}"
+                                    data-berkas="{{ asset('uploads/ijazah/' . $berkas->ijazah_tk) }}"
                                     data-judul="Ijazah TK">
                                     Data sebelumnya
                                 </button>
@@ -105,7 +105,7 @@
                                 <br>
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#detailModal"
-                                    data-berkas="{{ asset('storage/kip/' . $berkas->kip_pkh) }}" data-judul="KIP / PKH">
+                                    data-berkas="{{ asset('uploads/kip/' . $berkas->kip_pkh) }}" data-judul="KIP / PKH">
                                     Data sebelumnya
                                 </button>
                             @endif
@@ -119,7 +119,7 @@
                             @if ($berkas->ktp)
                                 <br>
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                    data-bs-target="#detailModal" data-berkas="{{ asset('storage/ktp/' . $berkas->ktp) }}"
+                                    data-bs-target="#detailModal" data-berkas="{{ asset('uploads/ktp/' . $berkas->ktp) }}"
                                     data-judul="KIP / PKH">
                                     Data sebelumnya
                                 </button>
@@ -134,7 +134,7 @@
                             @if ($berkas->foto)
                                 <br>
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                    data-bs-target="#detailModal" data-berkas="{{ asset('storage/foto/' . $berkas->foto) }}"
+                                    data-bs-target="#detailModal" data-berkas="{{ asset('uploads/foto/' . $berkas->foto) }}"
                                     data-judul="Foto Diri">
                                     Data sebelumnya
                                 </button>

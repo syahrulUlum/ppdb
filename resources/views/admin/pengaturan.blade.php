@@ -34,7 +34,7 @@
                                 <br>
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#detailModal"
-                                    data-berkas="{{ asset('storage/halaman/' . $pengaturan->foto_sekolah) }}"
+                                    data-berkas="{{ asset('uploads/halaman/' . $pengaturan->foto_sekolah) }}"
                                     data-judul="Foto Utama">
                                     Foto sebelumnya
                                 </button>
@@ -59,7 +59,7 @@
                                 <br>
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                     data-bs-target="#detailModal"
-                                    data-berkas="{{ asset('storage/halaman/' . $pengaturan->foto_kepsek) }}"
+                                    data-berkas="{{ asset('uploads/halaman/' . $pengaturan->foto_kepsek) }}"
                                     data-judul="Foto Kepala Sekolah">
                                     Foto sebelumnya
                                 </button>

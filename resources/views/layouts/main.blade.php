@@ -45,7 +45,7 @@
                                         @endauth
                                         @auth('siswa')
                                             @if (auth()->user()->foto)
-                                                <img src="{{ asset('storage/foto/' . auth()->user()->foto) }}"
+                                                <img src="{{ asset('uploads/foto/' . auth()->user()->foto) }}"
                                                     class="w-px-40 rounded-circle" />
                                             @else
                                                 <img src="{{ asset('assets/img/profile-default.png') }}"
@@ -66,7 +66,7 @@
                                                         @endauth
                                                         @auth('siswa')
                                                             @if (auth()->user()->foto)
-                                                                <img src="{{ asset('storage/foto/' . auth()->user()->foto) }}"
+                                                                <img src="{{ asset('uploads/foto/' . auth()->user()->foto) }}"
                                                                     class="w-px-40  rounded-circle" />
                                                             @else
                                                                 <img src="{{ asset('assets/img/profile-default.png') }}"

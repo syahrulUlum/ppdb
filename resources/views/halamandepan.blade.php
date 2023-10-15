@@ -151,7 +151,7 @@
                                 <div class="hero__thumb-2 scene">
                                     <div class="gambaran-sekolah">
                                         <img class="gambarnya"
-                                            src=""{{ asset('storage/halaman/' . $pengaturan->foto_sekolah) }}"">
+                                            src=""{{ asset('uploads/halaman/' . $pengaturan->foto_sekolah) }}"">
                                     </div>
                                 </div>
                             </div>
@@ -170,7 +170,7 @@
                         <div class="about__thumb-wrapper">
                             <div class="about__thumb ">
                                 <div style="width:440px; height:440px; background-color:grey;  ">
-                                    <img src="{{ asset('storage/halaman/' . $pengaturan->foto_kepsek) }}"
+                                    <img src="{{ asset('uploads/halaman/' . $pengaturan->foto_kepsek) }}"
                                         style="height:100%; width:100%" alt="" />
                                 </div>
 
