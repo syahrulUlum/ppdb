@@ -50,8 +50,9 @@ class DataSiswaController extends Controller
 
         $data_siswa = DataSiswa::where('id', Auth::user()->id)->first();
 
-        $cek_status = UserSiswa::find(Auth::user()->id)->pluck('status');
-        if ($cek_status[0] == "Diterima") {
+        $cek_status = UserSiswa::find(Auth::user()->id);
+
+        if ($cek_status->status == "Diterima") {
             return redirect('/datadiri')->with('gagal', 'Tidak dapat merubah data dikarenakan sudah diterima');
         }
 

@@ -42,8 +42,9 @@ class DataAlamatController extends Controller
 
         $data_alamat = DataAlamat::where('user_siswa_id', Auth::user()->id)->first();
 
-        $cek_status = UserSiswa::find(Auth::user()->id)->pluck('status');
-        if ($cek_status[0] == "Diterima") {
+        $cek_status = UserSiswa::find(Auth::user()->id);
+
+        if ($cek_status->status == "Diterima") {
             return redirect('/dataalamat')->with('gagal', 'Tidak dapat merubah data dikarenakan sudah diterima');
         }
 
