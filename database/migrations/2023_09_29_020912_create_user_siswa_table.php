@@ -27,7 +27,8 @@ class CreateUserSiswaTable extends Migration
             $table->string('foto')->nullable();
             $table->string('pesan_tolak')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
-
+            $table->boolean('verifikasi')->default(0);
+            $table->string('kode_verifikasi')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
 
             $table->timestamps();

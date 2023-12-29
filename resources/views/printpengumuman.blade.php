@@ -106,6 +106,8 @@
                         <li>Calon Peserta Didik Berusia 7-12 Tahun</li>
                         <li>Pas Foto 4x6 Calon Peserta Didik</li>
                         <li>Fotocopy KTP Orang Tua</li>
+                        <li>Tanda Bukti Diterima</li>
+
                     </ol>
                 </td>
             </tr>

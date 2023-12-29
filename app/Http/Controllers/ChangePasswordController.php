@@ -13,6 +13,9 @@ class ChangePasswordController extends Controller
     public function index()
     {
         if (Auth::guard('siswa')->check()) {
+            if (!auth()->user()->verifikasi) {
+                return redirect('/verifikasi');
+            }
             $kelengkapan = $this->cek_kelengkapan();
             return view('change_password', compact('kelengkapan'));
         }

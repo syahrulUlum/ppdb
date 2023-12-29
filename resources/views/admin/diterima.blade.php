@@ -72,7 +72,7 @@
                     ['10 rows', '25 rows', '50 rows', 'Show all']
                 ],
                 buttons: [
-                    'pageLength'
+                    'pageLength', 'print'
                 ],
             });
         });

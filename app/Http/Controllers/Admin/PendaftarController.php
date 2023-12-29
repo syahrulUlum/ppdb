@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\UserSiswa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use PDF;
 
 class PendaftarController extends Controller
 {
@@ -78,6 +80,8 @@ class PendaftarController extends Controller
 
         ]);
 
+        $this->kirimEmail($pendaftar->email, 1);
+
         return redirect('/pendaftar')->with('berhasil', "Pendaftar dengan nomor pendaftaran $pendaftar->no_pendaftaran berhasil diterima");
     }
 
@@ -102,6 +106,8 @@ class PendaftarController extends Controller
             "user_id" => auth()->user()->id
         ]);
 
+        $this->kirimEmail($pendaftar->email, 0);
+
         return redirect('/pendaftar')->with('berhasil', "Pendaftar dengan nomor pendaftaran $pendaftar->no_pendaftaran berhasil ditolak");
     }
 
@@ -110,5 +116,35 @@ class PendaftarController extends Controller
         $pendaftar = UserSiswa::find($id);
         $pendaftar->delete();
         return redirect('/pendaftar')->with('berhasil', "Pendaftar dengan nomor pendaftaran $pendaftar->no_pendaftaran berhasil dihapus");
+    }
+
+    private function kirimEmail($email, $terima)
+    {
+        $siswa = UserSiswa::with(['data_siswa', 'user', 'data_alamat', 'data_ortu'])->where('email', $email)->first();
+        $data["email"] = $email;
+        $data["title"] = "Info PPDB";
+        $data["siswa"] = $siswa;
+        $data["no_daftar"] = $siswa->no_pendaftaran;
+        $data["terima"] = $terima;
+
+        $pengumuman = PDF::loadView('email.pdfpengumuman', $data)->setOptions(['defaultFont' => 'sans-serif']);
+        $formulir = PDF::loadView('email.pdfformulir', $data)->setOptions(['defaultFont' => 'sans-serif']);
+
+        if ($terima) {
+            Mail::send('email.pengumuman', $data, function ($message) use ($data, $pengumuman, $formulir) {
+                $message->to($data["email"])
+                    ->subject($data["title"])
+                    ->attachData($pengumuman->output(), "Tanda Terima - " . $data['no_daftar'] . ".pdf")
+                    ->attachData($formulir->output(), "Formulir - " . $data['no_daftar'] . ".pdf");
+            });
+        } else {
+            Mail::send('email.pengumuman', $data, function ($message) use ($data) {
+                $message->to($data["email"])
+                    ->subject($data["title"]);
+            });
+        }
+    }
+    private function kirimEmailTolak()
+    {
     }
 }

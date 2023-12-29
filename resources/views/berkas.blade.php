@@ -209,7 +209,7 @@
                     aElement.textContent = 'Download';
                     aElement.classList.add('btn', 'btn-primary', 'mb-2');
                     aElement.setAttribute('download',
-                        `${judul} - {{ auth()->user()->data_siswa->nama_lengkap ?? auth()->user()->no_pendaftaran }}.pdf`
+                        `${judul} - {{ auth()->user()->data_siswa->nama_lengkap ?? auth()->user()->no_pendaftaran }}`
                     );
 
                     // Tambahkan elemen <a href> ke dalam div modal-body

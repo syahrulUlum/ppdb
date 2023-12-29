@@ -151,7 +151,7 @@
                                 <div class="hero__thumb-2 scene">
                                     <div class="gambaran-sekolah">
                                         <img class="gambarnya"
-                                            src=""{{ asset('uploads/halaman/' . $pengaturan->foto_sekolah) }}"">
+                                            src="{{ asset('uploads/halaman/' . $pengaturan->foto_sekolah) }}">
                                     </div>
                                 </div>
                             </div>

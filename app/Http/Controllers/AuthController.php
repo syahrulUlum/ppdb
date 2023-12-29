@@ -8,9 +8,11 @@ use App\Models\DataSiswa;
 use App\Models\Pengaturan;
 use App\Models\User;
 use App\Models\UserSiswa;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -113,7 +115,8 @@ class AuthController extends Controller
         $userSiswa = UserSiswa::create([
             "no_pendaftaran" => $noPendaftaran,
             "email" => $request->email,
-            "password" => Hash::make($request->password)
+            "password" => Hash::make($request->password),
+            "kode_verifikasi" => $this->generateRandomString()
         ]);
 
         DataSiswa::create([
@@ -133,6 +136,7 @@ class AuthController extends Controller
             'password' => $request->password
         ])) {
             $request->session()->regenerate();
+            $this->kirimVerifikasi($userSiswa->email, $userSiswa->kode_verifikasi);
             return redirect()->intended('/dashboard');
         }
     }
@@ -146,5 +150,91 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/login');
+    }
+
+    public function halamanVerifikasi()
+    {
+        $email = auth()->user()->email;
+        return view('verify_email', compact('email'));
+    }
+
+    public function handleVerifikasi($kode)
+    {
+        $siswa = UserSiswa::where('kode_verifikasi', $kode)->first();
+        // jika kode tidak ada alihkan ke halaman not found 404
+        if (!$siswa) {
+            return abort(404);
+        }
+
+        $tanggalKode = Carbon::parse($siswa->updated_at)->addHour(12);
+
+        // jika siswa sudah diverifikasi alihkan ke dashboard
+        if ($siswa->verifikasi) {
+            return redirect('/dashboard');
+        }
+
+        // check kode kadaluarsa
+        $kadaluarsa = 1;
+        $diverifikasi = 0;
+        if ($tanggalKode > Carbon::now()) {
+            $kadaluarsa = 0;
+            $siswa->update([
+                "verifikasi" => 1
+            ]);
+            $diverifikasi = 1;
+        }
+
+        return view('verify_email', compact('diverifikasi', 'kadaluarsa'));
+    }
+
+    public function kirimVerifikasi($email, $kode)
+    {
+        $data['email'] = $email;
+        $data['title'] = "Verifikasi PPDB";
+        $data['kode'] = $kode;
+
+        Mail::send('email.verifikasi', $data, function ($message) use ($data) {
+            $message->to($data['email'])
+                ->subject($data['title']);
+        });
+    }
+
+    public function kirimUlangVerifikasi()
+    {
+        // cek udah lewat 5 menit ?
+        $waktuKirim = Carbon::parse(auth()->user()->updated_at)->addMinute(5);
+        if ($waktuKirim > Carbon::now()) {
+            return back()->with('gagal', 'Hanya bisa digunakan kembali setelah 5 menit');
+        }
+
+        // update kode baru
+        $email = auth()->user()->email;
+        $siswa = UserSiswa::where('email', $email)->first();
+        $siswa->update([
+            "kode_verifikasi" => $this->generateRandomString()
+        ]);
+
+        $data['email'] = $email;
+        $data['title'] = "Verifikasi PPDB";
+        $data['kode'] = $siswa->kode_verifikasi;
+
+        Mail::send('email.verifikasi', $data, function ($message) use ($data) {
+            $message->to($data['email'])
+                ->subject($data['title']);
+        });
+
+        return redirect('/verifikasi')->with('berhasil', 'Kode verifikasi berhasil dikirim');
+    }
+
+    private function generateRandomString($length = 60)
+    {
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $randomString = '';
+
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, strlen($characters) - 1)];
+        }
+
+        return $randomString;
     }
 }

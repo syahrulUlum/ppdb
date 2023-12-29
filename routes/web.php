@@ -13,8 +13,8 @@ use App\Http\Controllers\DataSiswaController;
 use App\Http\Controllers\HalamanDepanController;
 use App\Http\Controllers\PengumumanController;
 use App\Http\Controllers\ProfileController;
+use App\Models\UserSiswa;
 use Illuminate\Support\Facades\Route;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -44,8 +44,13 @@ Route::group(['middleware' => ['auth:web,siswa']], function () {
     Route::put('/change-password', [ChangePasswordController::class, 'update']);
 });
 
+Route::group(['middleware' => ['auth:siswa', 'isNotVerified']], function () {
+    Route::get('/verifikasi', [AuthController::class, 'halamanVerifikasi']);
+    Route::get('/verifikasi/{kode}', [AuthController::class, 'handleVerifikasi']);
+    Route::get('/resend-verifikasi', [AuthController::class, 'kirimUlangVerifikasi']);
+});
 
-Route::group(['middleware' => ['auth:siswa']], function () {
+Route::group(['middleware' => ['auth:siswa', 'isVerified']], function () {
     Route::get('/datadiri', [DataSiswaController::class, 'index']);
     Route::put('/datadiri', [DataSiswaController::class, 'update']);
 
